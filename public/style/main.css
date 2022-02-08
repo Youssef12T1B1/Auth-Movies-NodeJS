@@ -1,0 +1,14 @@
+body{
+    background-color: brown;
+}
+p {
+    margin: 10px 0 !important;
+}
+.lg-container{
+    width: 440px;
+    margin-top: 50px;
+    text-align: center;
+}
+a{
+    font-weight: 700;
+}
