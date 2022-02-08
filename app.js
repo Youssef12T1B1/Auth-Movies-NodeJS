@@ -5,13 +5,14 @@ const mongoose = require ('mongoose');
 const exphbs = require('express-handlebars')
 const dotenv = require('dotenv')
 const connectDb = require('./config/db')
-
+const authRoutes = require('./routes/authRoutes')
 
 dotenv.config({path: './config/config.env'})
 
 connectDb()
 
 const app = express();
+app.use(express.json())
 //logging
 if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))
@@ -26,6 +27,7 @@ app.set('view engine','.hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', require('./routes/index'))
+app.use(authRoutes)
 
 
 const PORT = process.env.PORT || 3000 
