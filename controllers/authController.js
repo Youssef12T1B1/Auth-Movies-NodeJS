@@ -45,7 +45,9 @@ const handleErr = (err) =>{
 
 module.exports.signup_get = (req,res)=>{
 
-    res.render('signup')
+    res.render('signup',{
+        layout : 'loginl',
+    })
 }
 
 module.exports.signup_post = async (req,res)=>{
@@ -67,7 +69,9 @@ catch (err){
 
 module.exports.login_get = (req,res)=>{
 
-    res.render('login')
+    res.render('login', {
+        layout : 'loginl',
+    })
 }
 
 module.exports.login_post = async (req,res)=>{

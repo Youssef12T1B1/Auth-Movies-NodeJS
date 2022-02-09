@@ -1,9 +1,6 @@
 
 
 
-<div class="container lg-container">
-        <div class="card">
-            <div class="card-content">
                 <form action="">
                    <input type="text" name="email" id="email" placeholder="Email"> 
                    <div class="emailerror" style="margin-top: 5px; color: red; font-weight:bold"></div>
@@ -14,10 +11,7 @@
 
 
                 </form>
-            </div>
-
-        </div>
-      
+       
    <script>
 
         const form = document.querySelector('form');
@@ -47,7 +41,7 @@
                    PassErr.textContent = data.errors.password;
                  }
                  if (data.user){
-                   location.assign('/');
+                   location.assign('/dashboard');
                  }
 
                }

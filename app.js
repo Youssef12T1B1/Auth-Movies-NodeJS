@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser')
 
 
 
-
 dotenv.config({path: './config/config.env'})
 
 connectDb()
@@ -32,11 +31,14 @@ app.set('view engine','.hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 
+
 app.use('/', require('./routes/index'))
 app.use(authRoutes)
 
 
+
 const PORT = process.env.PORT || 3000 
+
 
 
 
