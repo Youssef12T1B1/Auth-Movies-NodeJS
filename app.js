@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars')
 const dotenv = require('dotenv')
 const connectDb = require('./config/db')
 const authRoutes = require('./routes/authRoutes')
+const cookieParser = require('cookie-parser')
 
 dotenv.config({path: './config/config.env'})
 
@@ -13,6 +14,7 @@ connectDb()
 
 const app = express();
 app.use(express.json())
+app.use(cookieParser())
 //logging
 if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))

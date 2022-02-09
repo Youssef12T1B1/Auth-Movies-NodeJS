@@ -1,5 +1,6 @@
 const User = require('../models/User')
- 
+const jwt = require('jsonwebtoken');
+
 //handle errors 
 const handleErr = (err) =>{
      
@@ -20,6 +21,7 @@ const handleErr = (err) =>{
 
       if(err.code === 11000){
           errors.email = 'that email is already used';
+          errors.username = 'that username is already used'
           return errors;
       }
 
@@ -33,30 +35,53 @@ const handleErr = (err) =>{
     }
 
 
+    const maxDate = 1*24*60*60;
+    const CreateToken = (id) =>{
+       return jwt.sign({id}, 'Joe Project', {
+           expiresIn: maxDate,
+       });
+    }    
+
+
 module.exports.signup_get = (req,res)=>{
 
     res.render('signup')
 }
 
 module.exports.signup_post = async (req,res)=>{
-const username = 'joe'
-const email = 'joe@gmail.Com'
-const password = 'joejoee1'
+
+const {username, email, password} = req.body
 
 try{
     const user = await User.create({username,email,password})
-    res.status(201).json(user)
+    const token =  CreateToken(user._id);
+      res.cookie('jwt', token, {httpOnly:true, maxAge : maxDate * 1000});
+      res.status(201).json({user: user._id})
 } 
 catch (err){
-console.log(err);
-res.status(400).send('user not creared')
+ const errors = handleErr(err)
+ res.status(400).json({errors})
 }
+
 }
+
 module.exports.login_get = (req,res)=>{
 
     res.render('login')
 }
-module.exports.login_post = (req,res)=>{
 
-    res.send(' login')
+module.exports.login_post = async (req,res)=>{
+    const {email, password} = req.body;
+
+    try{
+        const user = await User.login(email, password);
+        const token =  CreateToken(user._id);
+        res.cookie('jwt', token, {httpOnly:true, maxAge : maxDate * 1000});
+        res.status(201).json( { user: user._id }); 
+        
+     }
+     catch (err){
+        const errors =  handleErr(err);
+        res.status(400).json({ errors });
+     }
 }

@@ -6,9 +6,9 @@
             <div class="card-content">
                 <form action="">
                    <input type="text" name="email" id="email" placeholder="Email"> 
-                   <div class="emailerror" style="margin-top: 5px; color: red;"></div>
+                   <div class="emailerror" style="margin-top: 5px; color: red; font-weight:bold"></div>
                     <input type="password" name="password" id="password" placeholder="Password"> 
-                    <div class="passworderror" style="margin-top: 5px; color: red;"></div>
+                    <div class="passworderror" style="margin-top: 5px; color: red;font-weight:bold"></div>
                     <button class="btn brown darken-1" type="submit"><i class="fas fa-user left"></i>Sign In</button>
                      <div style="margin-top: 20px;"> <span>New to the App? </span><a href="/signup/">Sign Up</a></div>
 
@@ -18,4 +18,42 @@
 
         </div>
       
-   
+   <script>
+
+        const form = document.querySelector('form');
+        const EmailErr = document.querySelector('div.emailerror');
+        const PassErr = document.querySelector('div.passworderror');
+
+            form.addEventListener('submit',  async (e)=>{
+              e.preventDefault();
+              EmailErr.textContent = '';
+              PassErr.textContent = '';
+              
+              const email = form.email.value;
+              const password = form.password.value;
+
+              console.log(email, password);
+              try{
+                const res = await fetch('/login', {
+                  method: 'POST',
+                  body: JSON.stringify({ email, password}),
+                  headers:  {'Content-Type' : 'application/json' }
+                  
+                });
+                const data = await res.json();
+               
+                 if(data.errors){
+                   EmailErr.textContent = data.errors.email;
+                   PassErr.textContent = data.errors.password;
+                 }
+                 if (data.user){
+                   location.assign('/');
+                 }
+
+               }
+              catch (err){
+                console.log(err);
+              }
+
+         })
+      </script>
