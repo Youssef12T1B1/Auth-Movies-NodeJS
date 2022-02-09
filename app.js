@@ -8,6 +8,9 @@ const connectDb = require('./config/db')
 const authRoutes = require('./routes/authRoutes')
 const cookieParser = require('cookie-parser')
 
+
+
+
 dotenv.config({path: './config/config.env'})
 
 connectDb()
@@ -27,6 +30,7 @@ app.set('view engine','.hbs')
 
 //public 
 app.use(express.static(path.join(__dirname, 'public')))
+
 
 app.use('/', require('./routes/index'))
 app.use(authRoutes)
