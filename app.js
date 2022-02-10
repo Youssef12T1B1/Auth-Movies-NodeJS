@@ -15,6 +15,7 @@ dotenv.config({path: './config/config.env'})
 connectDb()
 
 const app = express();
+app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cookieParser())
 //logging
