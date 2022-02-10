@@ -1,9 +1,32 @@
 <h2>Dash</h2>
 <h3>welcome, {{name}} </h3>
 
-{{!-- {{#if movies}}
+{{#if movies}}
+
+<table class="striped">
+
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        {{#each movies}}
+        <tr>
+            <td><a href="/movies/{{_id}}"></a>{{title}}</td>
+            <td><span class="dash-status">{{status}}</span></td>
+            <td></td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 
 {{else}}
 
 <p>no movies or reviews</p>
-{{/if}} --}}
+{{/if}}
