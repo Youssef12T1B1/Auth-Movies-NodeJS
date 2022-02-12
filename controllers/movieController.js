@@ -1,10 +1,5 @@
-const express = require('express')
-const { render } = require('express/lib/response')
-const  router = express.Router()
-const { requireAuth, CheckUser } = require('../middleware/authMiddleware')
-
 const Movie = require('../models/Movie')
-
+const jwt = require('jsonwebtoken');
 
 const maxDate = 1*24*60*60;
 const CreateToken = (id) =>{
@@ -13,16 +8,16 @@ const CreateToken = (id) =>{
    });
 }    
 
-router.get('/add', requireAuth, (req,res)=>{
+module.exports.add_get = (req,res)=>{
     res.render('movies/add')
-})
+}
 
-router.post('/movies', requireAuth, async (req,res)=>{
-    const {email, status, body} = req.body;
+module.exports.add_post = async (req,res)=>{
+    const {email, body, status} = req.body;
     const user = req.user._id;
 
     try{
-        const movie = await Movie.create(email, status, body, user);
+        const movie = await Movie.create({email, body, status, user});
         const token =  CreateToken(movie._id);
         res.cookie('jwt', token, {httpOnly:true, maxAge : maxDate * 1000});
         res.status(201).json( { movie: movie._id }); 
@@ -31,6 +26,7 @@ router.post('/movies', requireAuth, async (req,res)=>{
      catch (err){
        console.log('errrrr');
      }
-})
 
-module.exports = router
+
+}
+

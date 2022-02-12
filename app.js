@@ -6,7 +6,9 @@ const exphbs = require('express-handlebars')
 const dotenv = require('dotenv')
 const connectDb = require('./config/db')
 const authRoutes = require('./routes/authRoutes')
+const movieRoutes = require('./routes/movieRoutes')
 const cookieParser = require('cookie-parser')
+const { CheckUser } = require('./middleware/authMiddleware')
 
 
 
@@ -32,9 +34,9 @@ app.set('view engine','.hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 
-
+app.use('*', CheckUser)
 app.use('/', require('./routes/index'))
-app.use('/movies', require('./routes/movies'))
+app.use(movieRoutes)
 app.use(authRoutes)
 
 
