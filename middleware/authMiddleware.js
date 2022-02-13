@@ -5,7 +5,7 @@ const User = require('../models/User');
 const requireAuth = (req, res, next ) =>{
     const token = req.cookies.jwt;
     if(token){
-        jwt.verify(token, 'Joe Project', (err, decodedToken)=>{
+        jwt.verify(token, process.env.jwt_sig , (err, decodedToken)=>{
             if(err){
                 console.log(err);
                 res.redirect('/login');
@@ -28,7 +28,7 @@ const requireAuth = (req, res, next ) =>{
 const CheckUser =  (req, res, next ) =>{
     const token = req.cookies.jwt;
     if(token){
-        jwt.verify(token, 'Joe Project', async (err, decodedToken)=>{
+        jwt.verify(token, process.env.jwt_sig , async (err, decodedToken)=>{
             if(err){
                 console.log(err);
                 res.locals.user = null;

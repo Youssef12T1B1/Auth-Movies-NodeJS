@@ -37,7 +37,7 @@ const handleErr = (err) =>{
 
     const maxDate = 1*24*60*60;
     const CreateToken = (id) =>{
-       return jwt.sign({id}, 'Joe Project', {
+       return jwt.sign({id}, process.env.jwt_sig, {
            expiresIn: maxDate,
        });
     }    
