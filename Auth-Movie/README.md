@@ -1,2 +1,2 @@
 # Talk-Movies-NodeJS
- App to share your movies stories and preferences
+ Auth using JWT and sharing movie stories and reviews
